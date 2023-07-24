@@ -8,7 +8,7 @@
     <form id="beltForm">
         <label for="initials">Enter your initials:</label>
         <input type="text" id="initials" name="initials" required minlength="2" maxlength="2">
-        <input type="submit" value="Generate">
+        <input type="submit" id="generateButton" value="Generate">
     </form>
 
     <canvas id="beltCanvas" width="800" height="400" style="border:1px solid #d3d3d3;">
@@ -16,12 +16,14 @@
     </canvas>
 
     <script>
+        var generateButton = document.getElementById('generateButton');
         document.getElementById('beltForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var initials = document.getElementById('initials').value.toUpperCase();
 
             var canvas = new fabric.Canvas('beltCanvas');
             fabric.Image.fromURL('https://visukyle.github.io/bg.png', function(img) {
+                generateButton.disabled = true;
                 img.scaleToWidth(canvas.width);
                 canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
                     scaleX: canvas.width / img.width,
@@ -35,6 +37,7 @@
                     fontSize: 50
                 });
                 canvas.add(text);
+                generateButton.disabled = false;
             });
         });
     </script>
